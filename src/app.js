@@ -5,15 +5,21 @@ const YouTubeNotifier = require("youtube-notification");
 const app = express();
 const notifier = new YouTubeNotifier({
   // hubCallback: "http://example.com/youtube",
-  hubCallback: "https://18.221.54.230:8080/youtube",
+  hubCallback: "https://18.221.54.230/youtube",
   secret: "Something",
+  port: 8081,
 });
 
 // https://221.147.81.82/youtube
 
 //https://www.youtube.com/xml/feeds/videos.xml?channel_id=CHANNEL_ID
-
+notifier.setup();
 app.use("/youtube", notifier.listener());
+
+app.get("/", (req, res, next) => {
+  res.send("hello world!");
+});
+
 app.listen(8080, () => console.log("Express server has started on port 8080"));
 
 notifier.on("subscribe", (data) => {
