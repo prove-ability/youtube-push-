@@ -55,7 +55,7 @@
 const YouTubeNotifier = require("youtube-notification");
 
 const notifier = new YouTubeNotifier({
-  hubCallback: "https://18.221.54.230/youtube",
+  hubCallback: "http://18.221.54.230/youtube",
   port: 8080,
   secret: "Something",
   path: "/youtube",
@@ -67,6 +67,7 @@ notifier.on("notified", (data) => {
   console.log(
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
+  console.log(data);
 });
 
 notifier.subscribe("UC045CUnX2NJW6DNjSYezjTw");
