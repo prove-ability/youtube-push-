@@ -5,7 +5,7 @@ const YouTubeNotifier = require("youtube-notification");
 const app = express();
 const notifier = new YouTubeNotifier({
   // hubCallback: "http://example.com/youtube",
-  hubCallback: "https://18.221.54.230/youtube",
+  hubCallback: "https://18.221.54.230:8080/youtube",
   secret: "Something",
 });
 
