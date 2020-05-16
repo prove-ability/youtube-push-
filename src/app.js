@@ -47,7 +47,7 @@
 // //   "UChlv4GSd7OQl3js-jkLOnFA", // 삼프로 TV
 // //   "UCauZxKRDiGcrWplWUOIN9JQ", // 이리온 스튜디오
 // //   "UCsJ6RuBiTVWRX156FVbeaGg", // 슈카월드
-// //   "UC045CUnX2NJW6DNjSYezjTw", // Prove
+// //   "UC045CUnX2NJW6DNjSYezjTw", // TEST(Prove)
 // // ]);
 
 // notifier.subscribe("UC045CUnX2NJW6DNjSYezjTw");
@@ -70,4 +70,13 @@ notifier.on("notified", (data) => {
   console.log(data);
 });
 
-notifier.subscribe("UC045CUnX2NJW6DNjSYezjTw");
+notifier.subscribe([
+  "UCP8KMauNQ5YhTL8fzoSYcfQ", // 하나TV
+  "UC90Y-ClmElcidhXs2-x1EIg", // SK 증권리서치
+  "UCBM86JVoHLqg9irpR2XKvGw", // 달란트투자
+  "UChlv4GSd7OQl3js-jkLOnFA", // 삼프로 TV
+  "UCauZxKRDiGcrWplWUOIN9JQ", // 이리온 스튜디오
+  "UCsJ6RuBiTVWRX156FVbeaGg", // 슈카월드
+  "UC045CUnX2NJW6DNjSYezjTw", // TEST(Prove)
+  "UC4PsAeGE4Hu1qakUnalUAAw", // TEST2(Prove.ability)
+]);
