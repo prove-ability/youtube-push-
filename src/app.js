@@ -21,7 +21,10 @@ notifier.on("subscribe", (data) => {
   // channel: 'UChlv4GSd7OQl3js-jkLOnFA',
   // lease_seconds: '432000' }
   const chatId = "-1001225087031";
-  bot.sendMessage(chatId, "Received your message");
+  bot.sendMessage(
+    chatId,
+    `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
+  );
 });
 
 notifier.on("unsubscribe", (data) => {
