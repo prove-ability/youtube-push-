@@ -2,13 +2,14 @@
 const YouTubeNotifier = require("youtube-notification");
 const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
-const queryString = require('querystring')
+const queryString = require("querystring");
 
 const token = "1110430648:AAGE5Mr8vF0-YFzzRlQgOiw1ikH3uaej_2s";
 const bot = new TelegramBot(token, { polling: true });
-const youtubeDataUrl = 'https://www.googleapis.com/youtube/v3';
-const youtubeApiKey = 'AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs';
-const useYoutubePart = 'id, snippet, brandingSettings, contentDetails, invideoPromotion, statistics, topicDetails';
+const youtubeDataUrl = "https://www.googleapis.com/youtube/v3";
+const youtubeApiKey = "AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs";
+const useYoutubePart =
+  "id, snippet, brandingSettings, contentDetails, invideoPromotion, statistics, topicDetails";
 
 const notifier = new YouTubeNotifier({
   hubCallback: "http://18.221.54.230/youtube",
@@ -37,14 +38,18 @@ notifier.on("denied", (data) => {
   console.log(data);
 });
 
-notifier.on("notified", (data) => {
+notifier.on("notified", async (data) => {
   const chatId = "-1001225087031";
   console.log("New Video");
   console.log(
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
   try {
-    const channelInfo = await axios.get(`${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=${queryString.stringify(useYoutubePart)}&id=${data.channel.id}`);
+    const channelInfo = await axios.get(
+      `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=${queryString.stringify(
+        useYoutubePart
+      )}&id=${data.channel.id}`
+    );
     console.log(channelInfo);
   } catch (error) {
     console.error(error);
