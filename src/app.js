@@ -20,11 +20,6 @@ notifier.on("subscribe", (data) => {
   // { type: 'subscribe',
   // channel: 'UChlv4GSd7OQl3js-jkLOnFA',
   // lease_seconds: '432000' }
-  const chatId = "-1001225087031";
-  bot.sendMessage(
-    chatId,
-    `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
-  );
 });
 
 notifier.on("unsubscribe", (data) => {
@@ -42,7 +37,10 @@ notifier.on("notified", (data) => {
   console.log(
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
-  console.log(data);
+  bot.sendMessage(
+    chatId,
+    `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
+  );
 });
 
 notifier.subscribe([
