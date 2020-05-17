@@ -46,9 +46,7 @@ notifier.on("notified", async (data) => {
   );
   try {
     const channelInfo = await axios.get(
-      `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=${queryString.stringify(
-        useYoutubePart
-      )}&id=${data.channel.id}`
+      `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
     );
     console.log(channelInfo);
   } catch (error) {
