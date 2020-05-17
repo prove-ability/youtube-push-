@@ -45,10 +45,10 @@ notifier.on("notified", async (data) => {
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
   try {
-    const { data } = await axios.get(
+    const response = await axios.get(
       `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
     );
-    console.log(data);
+    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
