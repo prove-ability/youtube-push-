@@ -37,6 +37,7 @@ notifier.on("notified", (data) => {
   console.log(
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
+  const chatId = "-1001225087031";
   bot.sendMessage(
     chatId,
     `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
