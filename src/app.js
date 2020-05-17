@@ -55,13 +55,28 @@
 const YouTubeNotifier = require("youtube-notification");
 
 const notifier = new YouTubeNotifier({
-  hubCallback: "http://18.221.54.230",
-  // hubCallback: "http://18.221.54.230/youtube",
+  // hubCallback: "http://18.221.54.230",
+  hubCallback: "http://18.221.54.230/youtube",
   port: 8080,
   secret: "Something",
   path: "/youtube",
 });
 notifier.setup();
+
+notifier.on("subscribe", (data) => {
+  console.log("Subscribed");
+  console.log(data);
+});
+
+notifier.on("unsubscribe", (data) => {
+  console.log("Unsubscribed");
+  console.log(data);
+});
+
+notifier.on("denied", (data) => {
+  console.log("Denied");
+  console.log(data);
+});
 
 notifier.on("notified", (data) => {
   console.log("New Video");
