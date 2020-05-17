@@ -39,16 +39,16 @@ notifier.on("denied", (data) => {
 });
 
 notifier.on("notified", async (data) => {
-  const chatId = "-1001225087031";
+  const chatId = "-1001225087031"; // test_youtuve
   console.log("New Video");
   console.log(
     `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
   );
   try {
-    const channelInfo = await axios.get(
+    const { data } = await axios.get(
       `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
     );
-    console.log(channelInfo);
+    console.log(data);
   } catch (error) {
     console.error(error);
   }
