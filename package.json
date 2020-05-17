@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "node-telegram-bot-api": "^0.50.0",
     "youtube-notification": "^1.1.0"
   }
