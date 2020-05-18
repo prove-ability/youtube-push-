@@ -52,10 +52,11 @@ notifier.on("notified", async (data) => {
   } catch (error) {
     console.error(error);
   }
-  bot.sendMessage(
-    chatId,
-    `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
-  );
+  // bot.sendMessage(
+  //   chatId,
+  //   `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
+  // );
+  bot.sendMessage(chatId, data.video.link);
 });
 
 notifier.subscribe([
