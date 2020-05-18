@@ -40,23 +40,35 @@ notifier.on("denied", (data) => {
 
 notifier.on("notified", async (data) => {
   const chatId = "-1001225087031"; // test_youtuve
-  console.log("New Video");
-  console.log(
-    `${data.channel.name} just uploaded a new video titled: ${data.video.title}`
-  );
+  console.log(data);
   try {
-    const response = await axios.get(
-      `${youtubeDataUrl}/channels/?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
+    const responseChannel = await axios.get(
+      `${youtubeDataUrl}/channels?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
     );
-    console.log(response.data);
+    const responseVideo = await axios.get(
+      `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=snippet&id=${data.video.id}`
+    );
+    console.log(responseVideo);
+    bot.sendMessage(
+      chatId,
+      <div>
+        <img
+          src={responseChannel.data.items[0].snippet.thumbnails.default.url}
+        />
+        <div>
+          `${data.channel.name} / $
+          {responseChannel.data.items[0].statistics.subscriberCount}`
+        </div>
+        {/* <img src={responseVideo}/> */}
+        <div>${data.video.title}</div>
+      </div>
+    );
   } catch (error) {
     console.error(error);
   }
   // bot.sendMessage(
-  //   chatId,
   //   `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
-  // );
-  bot.sendMessage(chatId, data.video.link);
+  // 영상길이, 조회수,
 });
 
 notifier.subscribe([
