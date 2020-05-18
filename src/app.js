@@ -48,20 +48,23 @@ notifier.on("notified", async (data) => {
     const responseVideo = await axios.get(
       `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=snippet&id=${data.video.id}`
     );
-    console.log(responseVideo);
+    console.log(responseVideo.data.items[0]);
     bot.sendMessage(
       chatId,
-      `<div>
-        <img
-          src={responseChannel.data.items[0].snippet.thumbnails.default.url}
-        />
-        <div>
-          ${data.channel.name} / $
-          {responseChannel.data.items[0].statistics.subscriberCount}
-        </div>
-        {/* <img src={responseVideo}/> */}
-        <div>${data.video.title}</div>
-      </div>`
+      `
+      ${data.channel.name} / ${responseChannel.data.items[0].statistics.subscriberCount}
+      ${data.video.title}
+      `
+      // `<div>
+      //   <img
+      //     src=${responseChannel.data.items[0].snippet.thumbnails.default.url}
+      //   />
+      //   <div>
+      //     ${data.channel.name} / ${responseChannel.data.items[0].statistics.subscriberCount}
+      //   </div>
+      //   {/* <img src={responseVideo}/> */}
+      //   <div>${data.video.title}</div>
+      // </div>`
     );
   } catch (error) {
     console.error(error);
