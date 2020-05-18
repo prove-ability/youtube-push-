@@ -51,17 +51,17 @@ notifier.on("notified", async (data) => {
     console.log(responseVideo);
     bot.sendMessage(
       chatId,
-      <div>
+      `<div>
         <img
           src={responseChannel.data.items[0].snippet.thumbnails.default.url}
         />
         <div>
-          `${data.channel.name} / $
-          {responseChannel.data.items[0].statistics.subscriberCount}`
+          ${data.channel.name} / $
+          {responseChannel.data.items[0].statistics.subscriberCount}
         </div>
         {/* <img src={responseVideo}/> */}
         <div>${data.video.title}</div>
-      </div>
+      </div>`
     );
   } catch (error) {
     console.error(error);
