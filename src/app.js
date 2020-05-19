@@ -46,32 +46,27 @@ notifier.on("notified", async (data) => {
       `${youtubeDataUrl}/channels?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
     );
     const responseVideo = await axios.get(
-      `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=snippet&id=${data.video.id}`
+      `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=%20id,%20snippet,%20contentDetails,%20liveStreamingDetails,%20player,%20recordingDetails,%20statistics,%20status,%20topicDetails&id=${data.video.id}`
     );
     console.log(responseVideo.data.items[0]);
+    // axios.get(`https://api.telegram.org/bot${token}/sendMessage`, {
+    //   chat_id: chatId,
+    //   text: htmlFormatingText,
+    //   parse_mode: "html",
+    //   disable_web_page_preview: "true",
+    // });
+    // 7:39
+    // [채널명,구독자 00명] 동영상명(조회수:), 업로드일시, 링크
     bot.sendMessage(
       chatId,
       `
-      ${data.channel.name} / ${responseChannel.data.items[0].statistics.subscriberCount}
-      ${data.video.title}
+      [${data.channel.name}, ${responseChannel.data.items[0].statistics.subscriberCount}명] ${data.video.title}(조회수:${responseVideo.data.items[0].statistics.viewCount}), ${data.video.title}(조회수:${responseVideo.data.items[0].snippet.publishedAt}
+      ${data.video.link}
       `
-      // `<div>
-      //   <img
-      //     src=${responseChannel.data.items[0].snippet.thumbnails.default.url}
-      //   />
-      //   <div>
-      //     ${data.channel.name} / ${responseChannel.data.items[0].statistics.subscriberCount}
-      //   </div>
-      //   {/* <img src={responseVideo}/> */}
-      //   <div>${data.video.title}</div>
-      // </div>`
     );
   } catch (error) {
     console.error(error);
   }
-  // bot.sendMessage(
-  //   `${data.channel.name}님이 "${data.video.title}" 영상을 업로드했습니다.`
-  // 영상길이, 조회수,
 });
 
 notifier.subscribe([
