@@ -60,8 +60,7 @@ notifier.on("notified", async (data) => {
     bot.sendMessage(
       chatId,
       `
-      [${data.channel.name}, ${responseChannel.data.items[0].statistics.subscriberCount}명] ${data.video.title}(조회수:${responseVideo.data.items[0].statistics.viewCount}), ${data.video.title}(조회수:${responseVideo.data.items[0].snippet.publishedAt}
-      ${data.video.link}
+      [${data.channel.name}, ${responseChannel.data.items[0].statistics.subscriberCount}명] ${data.video.title}(조회수:${responseVideo.data.items[0].statistics.viewCount}), ${data.video.title}${responseVideo.data.items[0].snippet.publishedAt}, ${data.video.link}
       `
     );
   } catch (error) {
