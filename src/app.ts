@@ -1,4 +1,3 @@
-"use strict";
 const YouTubeNotifier = require("youtube-notification");
 const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
@@ -8,7 +7,7 @@ const bot = new TelegramBot(token, { polling: true });
 const youtubeDataUrl = "https://www.googleapis.com/youtube/v3";
 const youtubeApiKey = "AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs";
 
-export const notifier = new YouTubeNotifier({
+const notifier = new YouTubeNotifier({
   hubCallback: "http://18.221.54.230/youtube",
   port: 8080,
   secret: "Something",
