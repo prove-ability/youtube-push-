@@ -22,10 +22,6 @@ notifier.setup();
 notifier.on("subscribe", (data) => {
   console.log("Subscribed");
   console.log(data);
-  // data
-  // { type: 'subscribe',
-  // channel: 'UChlv4GSd7OQl3js-jkLOnFA',
-  // lease_seconds: '432000' }
 });
 
 notifier.on("unsubscribe", (data) => {
@@ -39,18 +35,7 @@ notifier.on("denied", (data) => {
 });
 
 notifier.on("notified", async (data) => {
-  const chatId = "-1001225087031"; // test_youtuve
-  // data
-  // { video:
-  //   { id: 'xDLZN0Vz-UA',
-  //     title: '대가와의 만남(강방천 회장) - 부자되기 프로젝트 LIVE',
-  //     link: 'https://www.youtube.com/watch?v=xDLZN0Vz-UA' },
-  //  channel:
-  //   { id: 'UCP8KMauNQ5YhTL8fzoSYcfQ',
-  //     name: '하나TV',
-  //     link: 'https://www.youtube.com/channel/UCP8KMauNQ5YhTL8fzoSYcfQ' },
-  //  published: 2020-05-19T02:10:16.000Z,
-  //  updated: 2020-05-19T02:10:30.256Z }
+  const chatId = "-1001225087031";
   try {
     const responseChannel = await axios.get(
       `${youtubeDataUrl}/channels?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
@@ -58,7 +43,6 @@ notifier.on("notified", async (data) => {
     const responseVideo = await axios.get(
       `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=%20id,%20snippet,%20contentDetails,%20liveStreamingDetails,%20player,%20recordingDetails,%20statistics,%20status,%20topicDetails&id=${data.video.id}`
     );
-    // [채널명,구독자 00명] 동영상명(조회수:), 업로드일시, 링크
     bot.sendMessage(
       chatId,
       `
