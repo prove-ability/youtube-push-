@@ -2,16 +2,13 @@
 const YouTubeNotifier = require("youtube-notification");
 const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
-const queryString = require("querystring");
 
 const token = "1110430648:AAGE5Mr8vF0-YFzzRlQgOiw1ikH3uaej_2s";
 const bot = new TelegramBot(token, { polling: true });
 const youtubeDataUrl = "https://www.googleapis.com/youtube/v3";
 const youtubeApiKey = "AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs";
-const useYoutubePart =
-  "id, snippet, brandingSettings, contentDetails, invideoPromotion, statistics, topicDetails";
 
-const notifier = new YouTubeNotifier({
+export const notifier = new YouTubeNotifier({
   hubCallback: "http://18.221.54.230/youtube",
   port: 8080,
   secret: "Something",
