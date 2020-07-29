@@ -1,14 +1,18 @@
-const YouTubeNotifier = require("youtube-notification");
-const TelegramBot = require("node-telegram-bot-api");
-const axios = require("axios");
+import YouTubeNotifier from "youtube-notification";
+import axios from "axios";
+import moment from "moment";
+import { getRepository } from "typeorm";
+import { YoutubeVideoInfo } from "./entities/youtube-video-info.entity";
 
-const token = "1110430648:AAGE5Mr8vF0-YFzzRlQgOiw1ikH3uaej_2s";
-const bot = new TelegramBot(token, { polling: true });
 const youtubeDataUrl = "https://www.googleapis.com/youtube/v3";
-const youtubeApiKey = "AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs";
+
+// const youtubeApiKey = "AIzaSyBE2Md-k8uk4I5OFEoZZJbAc0BvioaNbbs";
+
+// staging-key
+const youtubeApiKey = "AIzaSyBEHJ8S_3ZwFNrW-QUvvjYYWDydkFwz2Lo";
 
 const notifier = new YouTubeNotifier({
-  hubCallback: "http://18.221.54.230/youtube",
+  hubCallback: "http://3.35.10.35/youtube",
   port: 8080,
   secret: "Something",
   path: "/youtube",
@@ -31,20 +35,67 @@ notifier.on("denied", (data) => {
 });
 
 notifier.on("notified", async (data) => {
-  const chatId = "-1001225087031";
+  const {
+    video: { id: videoId, title: videoTitle },
+    channel: { id: channelId, name: channelTitle },
+    published: publishedAt,
+  } = data;
+  console.log(videoTitle);
   try {
-    const responseChannel = await axios.get(
-      `${youtubeDataUrl}/channels?key=${youtubeApiKey}&part=id,%20snippet,%20brandingSettings,%20contentDetails,%20invideoPromotion,%20statistics,%20topicDetails&id=${data.channel.id}`
+    const {
+      data: { items: videoInfo },
+    } = await axios.get(
+      `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=statistics,snippet&id=${videoId}`
     );
-    const responseVideo = await axios.get(
-      `${youtubeDataUrl}/videos?key=${youtubeApiKey}&part=%20id,%20snippet,%20contentDetails,%20liveStreamingDetails,%20player,%20recordingDetails,%20statistics,%20status,%20topicDetails&id=${data.video.id}`
+    const {
+      statistics: { viewCount, likeCount },
+      snippet: {
+        liveBroadcastContent,
+        thumbnails: {
+          medium: { url: thumbnail },
+        },
+      },
+    } = videoInfo[0];
+    if (liveBroadcastContent !== "none") return null;
+    const {
+      data: { items: channelInfo },
+    } = await axios.get(
+      `${youtubeDataUrl}/channels?key=${youtubeApiKey}&part=statistics,snippet&id=${channelId}`
     );
-    bot.sendMessage(
-      chatId,
-      `
-      [${data.channel.name}, ${responseChannel.data.items[0].statistics.subscriberCount}명] ${data.video.title}(조회수:${responseVideo.data.items[0].statistics.viewCount}), ${data.video.title}${responseVideo.data.items[0].snippet.publishedAt}, ${data.video.link}
-      `
-    );
+    const {
+      statistics: { subscriberCount },
+      snippet: {
+        thumbnails: {
+          default: { url: channelProfile },
+        },
+      },
+    } = channelInfo[0];
+    const youtubeVideoInfo = {
+      publishedAt: moment(publishedAt).add(9, "hour"),
+      videoTitle,
+      thumbnail,
+      channelTitle,
+      viewCount,
+      subscriberCount,
+      videoId,
+      likeCount,
+      channelId,
+      channelProfile,
+    };
+    console.log(youtubeVideoInfo);
+    // const list = await getRepository(YoutubeVideoInfo);
+    const video = new YoutubeVideoInfo();
+    video.publishedAt = moment(publishedAt).add(9, "hour").toDate();
+    video.videoTitle = videoTitle;
+    video.thumbnail = thumbnail;
+    video.channelTitle = channelTitle;
+    video.viewCount = viewCount;
+    video.subscriberCount = subscriberCount;
+    video.videoId = videoId;
+    video.likeCount = likeCount;
+    video.channelId = channelId;
+    video.channelProfile = channelProfile;
+    video.save();
   } catch (error) {
     console.error(error);
   }

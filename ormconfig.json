@@ -1,0 +1,10 @@
+{
+  "type": "postgres",
+  "host": "crowdbasedb.chnmx9dyn2i5.ap-northeast-2.rds.amazonaws.com",
+  "port": 5432,
+  "username": "crowdbase",
+  "password": "crowdbase0529!",
+  "database": "crowdbase_staging",
+  "entities": ["src/entities/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
